@@ -18,10 +18,10 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: AppColors.nutriscoreA),
+        extensions: [OffThemeExtension.defaultValues()],
         fontFamily: 'Avenir',
         textTheme: TextTheme(headlineMedium: TextStyle()),
-        extensions: [OffThemeExtension.defaultValues()],
+        dividerTheme: DividerThemeData(color: AppColors.grey2, space: 1.0),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           showSelectedLabels: true,
           showUnselectedLabels: true,
