@@ -22,6 +22,17 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Avenir',
         textTheme: TextTheme(headlineMedium: TextStyle()),
         extensions: [OffThemeExtension.defaultValues()],
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          selectedItemColor: AppColors.blue,
+          unselectedItemColor: AppColors.grey2,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+        ),
+        navigationBarTheme: const NavigationBarThemeData(
+          indicatorColor: AppColors.blue,
+        ),
       ),
       debugShowCheckedModeBanner: false,
       home: ProductPage(),
