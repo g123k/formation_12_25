@@ -5,6 +5,7 @@ import 'package:formation_flutter/res/app_colors.dart';
 import 'package:formation_flutter/res/app_icons.dart';
 import 'package:formation_flutter/res/app_theme_extension.dart';
 import 'package:formation_flutter/screens/product/product_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProductTab0 extends StatelessWidget {
   const ProductTab0({super.key});
@@ -37,7 +38,7 @@ class _Scores extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Product product = ProductProvider.of(context).product;
+    final Product product = Provider.of<ProductProvider>(context).product;
 
     return DefaultTextStyle(
       style: context.theme.altText,
@@ -105,17 +106,22 @@ class _Nutriscore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          AppLocalizations.of(context)!.nutriscore,
-          style: context.theme.title3,
-        ),
-        const SizedBox(height: 5.0),
-        Image.asset(_findAssetName(), height: 42.0),
-      ],
+    return InkWell(
+      onTap: () {
+        Provider.of<ProductProvider>(context, listen: false).update();
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            AppLocalizations.of(context)!.nutriscore,
+            style: context.theme.title3,
+          ),
+          const SizedBox(height: 5.0),
+          Image.asset(_findAssetName(), height: 42.0),
+        ],
+      ),
     );
   }
 
@@ -242,7 +248,7 @@ class _Info extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Product product = ProductProvider.of(context).product;
+    final Product product = Provider.of<ProductProvider>(context).product;
     final AppLocalizations localizations = AppLocalizations.of(context)!;
 
     return Column(

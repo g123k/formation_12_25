@@ -9,6 +9,7 @@ import 'package:formation_flutter/screens/product/tabs/product_tab0.dart';
 import 'package:formation_flutter/screens/product/tabs/product_tab1.dart';
 import 'package:formation_flutter/screens/product/tabs/product_tab2.dart';
 import 'package:formation_flutter/screens/product/tabs/product_tab3.dart';
+import 'package:provider/provider.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -24,8 +25,8 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     final AppLocalizations appLocalizations = AppLocalizations.of(context)!;
 
-    return ProductProvider(
-      product: generateProduct(),
+    return ChangeNotifierProvider(
+      create: (_) => ProductProvider(product: generateProduct()),
       child: Scaffold(
         backgroundColor: AppColors.white,
         body: CustomScrollView(

@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 class Product {
   final String barcode;
-  final String? name;
+  String? name;
   final String? altName;
   final String? picture;
   final String? quantity;

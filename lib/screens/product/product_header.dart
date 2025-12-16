@@ -5,6 +5,7 @@ import 'package:formation_flutter/model/product.dart';
 import 'package:formation_flutter/res/app_colors.dart';
 import 'package:formation_flutter/res/app_theme_extension.dart';
 import 'package:formation_flutter/screens/product/product_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 class ProductHeader extends StatelessWidget {
@@ -50,7 +51,7 @@ class _ProductHeaderDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    final Product product = ProductProvider.of(context).product;
+    final Product product = Provider.of<ProductProvider>(context).product;
     final double progress = (shrinkOffset / (maxHeight - minHeight)).clamp(
       0.0,
       1.0,
@@ -116,7 +117,7 @@ class ProductNameHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Product product = ProductProvider.of(context).product;
+    final Product product = Provider.of<ProductProvider>(context).product;
 
     return SliverPinnedHeader(
       child: Material(
