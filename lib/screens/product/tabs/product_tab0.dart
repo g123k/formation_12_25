@@ -4,11 +4,10 @@ import 'package:formation_flutter/model/product.dart';
 import 'package:formation_flutter/res/app_colors.dart';
 import 'package:formation_flutter/res/app_icons.dart';
 import 'package:formation_flutter/res/app_theme_extension.dart';
+import 'package:formation_flutter/screens/product/product_provider.dart';
 
 class ProductTab0 extends StatelessWidget {
   const ProductTab0({super.key});
-
-  static const double IMAGE_HEIGHT = 300.0;
 
   static const double _kHorizontalPadding = 20.0;
 
@@ -38,6 +37,8 @@ class _Scores extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Product product = ProductProvider.of(context).product;
+
     return DefaultTextStyle(
       style: context.theme.altText,
       child: Container(
@@ -59,7 +60,10 @@ class _Scores extends StatelessWidget {
                       flex: 44,
                       child: Padding(
                         padding: const EdgeInsetsDirectional.only(end: 5.0),
-                        child: _Nutriscore(nutriscore: ProductNutriScore.A),
+                        child: _Nutriscore(
+                          nutriscore:
+                              product.nutriScore ?? ProductNutriScore.unknown,
+                        ),
                       ),
                     ),
                     const VerticalDivider(),
@@ -67,7 +71,10 @@ class _Scores extends StatelessWidget {
                       flex: 66,
                       child: Padding(
                         padding: const EdgeInsetsDirectional.only(start: 25.0),
-                        child: _NovaGroup(novaScore: ProductNovaScore.group4),
+                        child: _NovaGroup(
+                          novaScore:
+                              product.novaScore ?? ProductNovaScore.unknown,
+                        ),
                       ),
                     ),
                   ],
@@ -80,7 +87,9 @@ class _Scores extends StatelessWidget {
                 vertical: _verticalPadding,
                 horizontal: _horizontalPadding,
               ),
-              child: _GreenScore(greenScore: ProductGreenScore.B),
+              child: _GreenScore(
+                greenScore: product.greenScore ?? ProductGreenScore.unknown,
+              ),
             ),
           ],
         ),
@@ -233,15 +242,19 @@ class _Info extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Product product = ProductProvider.of(context).product;
     final AppLocalizations localizations = AppLocalizations.of(context)!;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        _ProductItemValue(label: localizations.product_quantity, value: '200g'),
+        _ProductItemValue(
+          label: localizations.product_quantity,
+          value: product.quantity ?? '-',
+        ),
         _ProductItemValue(
           label: localizations.product_countries,
-          value: 'France',
+          value: product.manufacturingCountries?.join(', ') ?? '-',
           includeDivider: false,
         ),
         const SizedBox(height: 15.0),
@@ -251,7 +264,7 @@ class _Info extends StatelessWidget {
               flex: 40,
               child: _ProductBubble(
                 label: localizations.product_vegan,
-                value: true == ProductAnalysis.yes
+                value: product.isVegan == ProductAnalysis.yes
                     ? _ProductBubbleValue.on
                     : _ProductBubbleValue.off,
               ),
@@ -261,7 +274,7 @@ class _Info extends StatelessWidget {
               flex: 40,
               child: _ProductBubble(
                 label: localizations.product_vegetarian,
-                value: true == ProductAnalysis.yes
+                value: product.isVegetarian == ProductAnalysis.yes
                     ? _ProductBubbleValue.on
                     : _ProductBubbleValue.off,
               ),

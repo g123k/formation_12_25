@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:formation_flutter/model/product.dart';
 import 'package:formation_flutter/res/app_colors.dart';
 import 'package:formation_flutter/res/app_theme_extension.dart';
+import 'package:formation_flutter/screens/product/product_provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 class ProductHeader extends StatelessWidget {
@@ -48,6 +50,7 @@ class _ProductHeaderDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
+    final Product product = ProductProvider.of(context).product;
     final double progress = (shrinkOffset / (maxHeight - minHeight)).clamp(
       0.0,
       1.0,
@@ -62,7 +65,7 @@ class _ProductHeaderDelegate extends SliverPersistentHeaderDelegate {
           end: 0.0,
           height: maxHeight - shrinkOffset,
           child: Image.network(
-            'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=1310&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            product.picture ?? '',
             width: double.infinity,
             fit: BoxFit.cover,
             colorBlendMode: BlendMode.srcATop,
@@ -113,18 +116,27 @@ class ProductNameHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Product product = ProductProvider.of(context).product;
+
     return SliverPinnedHeader(
       child: Material(
         color: Colors.white,
         child: Padding(
-          padding: EdgeInsetsDirectional.only(start: 20.0, end: 20.0),
+          padding: EdgeInsetsDirectional.only(
+            top: 10.0,
+            start: 20.0,
+            end: 20.0,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Petits pois et carottes', style: context.theme.title1),
+              Text(product.name ?? '-', style: context.theme.title1),
               const SizedBox(height: 3.0),
-              Text('Cassegrain', style: context.theme.title2),
+              Text(
+                product.brands?.join(', ') ?? '-',
+                style: context.theme.title2,
+              ),
               const SizedBox(height: 8.0),
             ],
           ),
