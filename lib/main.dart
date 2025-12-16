@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:formation_flutter/l10n/app_localizations.dart';
+import 'package:formation_flutter/res/app_colors.dart';
+import 'package:formation_flutter/res/app_images.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: .fromSeed(seedColor: AppColors.blue),
         fontFamily: 'Avenir',
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
@@ -93,6 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: .center,
           children: [
+            Image.asset(AppImages.nutriscoreA),
             const Text('You have pushed the button this many times:'),
             Text(
               '$_counter',

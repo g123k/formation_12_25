@@ -2,6 +2,8 @@ import 'dart:ui';
 
 // ignore: avoid_classes_with_only_static_members
 class AppColors {
+  const AppColors._();
+
   static const Color blue = Color(0xFF080040);
   static const Color blueDark = Color(0xFF050027);
   static const Color yellow = Color(0xFFFBAF02);

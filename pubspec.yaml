@@ -30,7 +30,6 @@ flutter:
 
   assets:
     - res/drawables/
-    - res/fonts/
     - res/svg/
 
   fonts:
