@@ -13,7 +13,7 @@ class ListScreen extends StatelessWidget {
           return SizedBox(height: 30.0, child: Text(position.toString()));
         },
         separatorBuilder: (BuildContext context, int position) {
-          return Divider();
+          return Divider(key: Key('Divider'));
         },
         cacheExtent: 30.0,
       ),

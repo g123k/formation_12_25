@@ -51,7 +51,6 @@ class _ProductHeaderDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    final Product product = Provider.of<ProductProvider>(context).product;
     final double progress = (shrinkOffset / (maxHeight - minHeight)).clamp(
       0.0,
       1.0,
@@ -65,11 +64,17 @@ class _ProductHeaderDelegate extends SliverPersistentHeaderDelegate {
           start: 0.0,
           end: 0.0,
           height: maxHeight - shrinkOffset,
-          child: Image.network(
-            product.picture ?? '',
-            width: double.infinity,
-            fit: BoxFit.cover,
-            colorBlendMode: BlendMode.srcATop,
+          child: Consumer<ProductProvider>(
+            builder: (BuildContext context, ProductProvider provider, _) {
+              final Product product = provider.product;
+
+              return Image.network(
+                product.picture ?? '',
+                width: double.infinity,
+                fit: BoxFit.cover,
+                colorBlendMode: BlendMode.srcATop,
+              );
+            },
           ),
         ),
         PositionedDirectional(

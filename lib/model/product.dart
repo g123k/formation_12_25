@@ -1,7 +1,10 @@
 // ignore_for_file: constant_identifier_names
+import 'package:flutter/cupertino.dart';
+
+@immutable
 class Product {
   final String barcode;
-  String? name;
+  final String? name;
   final String? altName;
   final String? picture;
   final String? quantity;
@@ -49,6 +52,59 @@ class Product {
     this.isVegan,
     this.isVegetarian,
   });
+
+  Product copyWith({
+    String? barcode,
+    String? name,
+    String? altName,
+    String? picture,
+    String? quantity,
+    List<String>? brands,
+    List<String>? manufacturingCountries,
+    ProductNutriScore? nutriScore,
+    ProductNutriScoreLevels? nutriScoreLevels,
+    ProductNovaScore? novaScore,
+    ProductGreenScore? greenScore,
+    List<String>? ingredients,
+    String? ingredientsWithAllergens,
+    List<String>? traces,
+    List<String>? allergens,
+    Map<String, String>? additives,
+    NutrientLevels? nutrientLevels,
+    NutritionFacts? nutritionFacts,
+    bool? ingredientsFromPalmOil,
+    ProductAnalysis? containsPalmOil,
+    ProductAnalysis? isVegan,
+    ProductAnalysis? isVegetarian,
+  }) {
+    return Product(
+      barcode: barcode ?? this.barcode,
+      name: name ?? this.name,
+      altName: altName ?? this.altName,
+      picture: picture ?? this.picture,
+      quantity: quantity ?? this.quantity,
+      brands: brands ?? this.brands,
+      manufacturingCountries:
+          manufacturingCountries ?? this.manufacturingCountries,
+      nutriScore: nutriScore ?? this.nutriScore,
+      nutriScoreLevels: nutriScoreLevels ?? this.nutriScoreLevels,
+      novaScore: novaScore ?? this.novaScore,
+      greenScore: greenScore ?? this.greenScore,
+      ingredients: ingredients ?? this.ingredients,
+      ingredientsWithAllergens:
+          ingredientsWithAllergens ?? this.ingredientsWithAllergens,
+      traces: traces ?? this.traces,
+      allergens: allergens ?? this.allergens,
+      additives: additives ?? this.additives,
+      nutrientLevels: nutrientLevels ?? this.nutrientLevels,
+      nutritionFacts: nutritionFacts ?? this.nutritionFacts,
+      ingredientsFromPalmOil:
+          ingredientsFromPalmOil ?? this.ingredientsFromPalmOil,
+      containsPalmOil: containsPalmOil ?? this.containsPalmOil,
+      isVegan: isVegan ?? this.isVegan,
+      isVegetarian: isVegetarian ?? this.isVegetarian,
+    );
+  }
 }
 
 class NutritionFacts {
