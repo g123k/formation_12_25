@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formation_flutter/l10n/app_localizations.dart';
 import 'package:formation_flutter/model/product.dart';
 import 'package:formation_flutter/res/app_colors.dart';
 import 'package:formation_flutter/res/app_icons.dart';
 import 'package:formation_flutter/res/app_theme_extension.dart';
-import 'package:formation_flutter/screens/product/product_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:formation_flutter/screens/product/bloc/product_bloc.dart';
 
 class ProductTab0 extends StatelessWidget {
   const ProductTab0({super.key});
@@ -38,7 +38,10 @@ class _Scores extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Product product = Provider.of<ProductProvider>(context).product;
+    final Product product =
+        (BlocProvider.of<ProductBloc>(context, listen: true).state
+                as ProductLoaded)
+            .product;
 
     return DefaultTextStyle(
       style: context.theme.altText,
@@ -106,22 +109,17 @@ class _Nutriscore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Provider.of<ProductProvider>(context, listen: false).update();
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            AppLocalizations.of(context)!.nutriscore,
-            style: context.theme.title3,
-          ),
-          const SizedBox(height: 5.0),
-          Image.asset(_findAssetName(), height: 42.0),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          AppLocalizations.of(context)!.nutriscore,
+          style: context.theme.title3,
+        ),
+        const SizedBox(height: 5.0),
+        Image.asset(_findAssetName(), height: 42.0),
+      ],
     );
   }
 
@@ -248,44 +246,61 @@ class _Info extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Product product = Provider.of<ProductProvider>(context).product;
     final AppLocalizations localizations = AppLocalizations.of(context)!;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        _ProductItemValue(
-          label: localizations.product_quantity,
-          value: product.quantity ?? '-',
+        BlocBuilder<ProductBloc, ProductState>(
+          builder: (BuildContext context, ProductState state) {
+            return _ProductItemValue(
+              label: localizations.product_quantity,
+              value: (state as ProductLoaded).product.quantity ?? '-',
+            );
+          },
         ),
-        _ProductItemValue(
-          label: localizations.product_countries,
-          value: product.manufacturingCountries?.join(', ') ?? '-',
-          includeDivider: false,
+        BlocBuilder<ProductBloc, ProductState>(
+          builder: (BuildContext context, ProductState state) {
+            return _ProductItemValue(
+              label: localizations.product_countries,
+              value:
+                  (state as ProductLoaded).product.manufacturingCountries?.join(
+                    ', ',
+                  ) ??
+                  '-',
+              includeDivider: false,
+            );
+          },
         ),
         const SizedBox(height: 15.0),
-        Row(
-          children: <Widget>[
-            Expanded(
-              flex: 40,
-              child: _ProductBubble(
-                label: localizations.product_vegan,
-                value: product.isVegan == ProductAnalysis.yes
-                    ? _ProductBubbleValue.on
-                    : _ProductBubbleValue.off,
-              ),
-            ),
-            Spacer(flex: 10),
-            Expanded(
-              flex: 40,
-              child: _ProductBubble(
-                label: localizations.product_vegetarian,
-                value: product.isVegetarian == ProductAnalysis.yes
-                    ? _ProductBubbleValue.on
-                    : _ProductBubbleValue.off,
-              ),
-            ),
-          ],
+        BlocBuilder<ProductBloc, ProductState>(
+          builder: (BuildContext context, ProductState state) {
+            final Product product = (state as ProductLoaded).product;
+
+            return Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 40,
+                  child: _ProductBubble(
+                    label: localizations.product_vegan,
+                    value: product.isVegan == ProductAnalysis.yes
+                        ? _ProductBubbleValue.on
+                        : _ProductBubbleValue.off,
+                  ),
+                ),
+                Spacer(flex: 10),
+                Expanded(
+                  flex: 40,
+                  child: _ProductBubble(
+                    label: localizations.product_vegetarian,
+                    value: product.isVegetarian == ProductAnalysis.yes
+                        ? _ProductBubbleValue.on
+                        : _ProductBubbleValue.off,
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ],
     );

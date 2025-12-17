@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formation_flutter/model/product.dart';
 import 'package:formation_flutter/res/app_colors.dart';
 import 'package:formation_flutter/res/app_theme_extension.dart';
-import 'package:formation_flutter/screens/product/product_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:formation_flutter/screens/product/bloc/product_bloc.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 class ProductHeader extends StatelessWidget {
@@ -64,17 +64,18 @@ class _ProductHeaderDelegate extends SliverPersistentHeaderDelegate {
           start: 0.0,
           end: 0.0,
           height: maxHeight - shrinkOffset,
-          child: Consumer<ProductProvider>(
-            builder: (BuildContext context, ProductProvider provider, _) {
-              final Product product = provider.product;
-
-              return Image.network(
-                product.picture ?? '',
-                width: double.infinity,
-                fit: BoxFit.cover,
-                colorBlendMode: BlendMode.srcATop,
-              );
-            },
+          child: BlocListener<ProductBloc, ProductState>(
+            listener: (BuildContext context, ProductState state) {},
+            child: BlocBuilder<ProductBloc, ProductState>(
+              builder: (BuildContext context, ProductState state) {
+                return Image.network(
+                  (state as ProductLoaded).product.picture ?? '',
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  colorBlendMode: BlendMode.srcATop,
+                );
+              },
+            ),
           ),
         ),
         PositionedDirectional(
@@ -122,7 +123,10 @@ class ProductNameHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Product product = Provider.of<ProductProvider>(context).product;
+    final Product product =
+        (BlocProvider.of<ProductBloc>(context, listen: true).state
+                as ProductLoaded)
+            .product;
 
     return SliverPinnedHeader(
       child: Material(
