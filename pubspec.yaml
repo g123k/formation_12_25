@@ -28,8 +28,12 @@ dependencies:
 
   ## Network
   dio: 5.9.0
-  retrofit: 4.9.1
+  retrofit: 4.7.3
   json_annotation: 4.9.0
+
+  ## Dependency Injection
+  get_it: 9.2.0
+  injectable: 2.7.1+2
 
 dev_dependencies:
   flutter_test:
@@ -38,9 +42,10 @@ dev_dependencies:
   flutter_lints: ^6.0.0
 
   ## Network
-  retrofit_generator: 10.2.0
+  retrofit_generator: 10.0.6
   json_serializable: any
-  build_runner: 2.10.4
+  build_runner: 2.9.0
+  injectable_generator: 2.9.0
 
 flutter:
 
