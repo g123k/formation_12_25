@@ -19,17 +19,28 @@ dependencies:
   flutter_svg: 2.2.3
   sliver_tools: 0.2.12
 
-  provider: 6.1.5+1
-
+  ## Routing
   go_router: 17.0.1
 
+  ## State Management
+  provider: 6.1.5+1
   flutter_bloc: 9.1.1
+
+  ## Network
+  dio: 5.9.0
+  retrofit: 4.9.1
+  json_annotation: 4.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^6.0.0
+
+  ## Network
+  retrofit_generator: 10.2.0
+  json_serializable: any
+  build_runner: 2.10.4
 
 flutter:
 
